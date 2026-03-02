@@ -1,6 +1,25 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Icon from '@mdi/react';
+import {
+	mdiAirplane,
+	mdiAccount,
+	mdiLightningBolt,
+	mdiLogout,
+	mdiCashMultiple,
+	mdiWalletBifoldOutline,
+} from '@mdi/js';
+
 import './globals.css';
+import { Button } from '@/components/ui/button';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -22,9 +41,89 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const navLinks = [
+		{ name: 'Travel Diary', href: '/MyCollection' },
+		{ name: 'Showcase', href: '/Showcase' },
+		{ name: 'Upload', href: 'Upload' },
+		{ name: 'Pricing', href: 'Pricing' },
+	];
 	return (
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				<div className=" w-full text-3xl flex justify-center items-center text-teal-500 font-bold pt-3 my-2">
+					<div className="flex w-4/5">
+						<Icon path={mdiAirplane} size={2} />
+						Travel Memories
+						<div className="flex grow-1"></div>
+						<div className="flex justify-center">
+							{navLinks.map((link) => (
+								<div
+									key={link.name}
+									className="text-xl font-normal text-gray-700 hover:text-teal-500 px-2"
+								>
+									<a href={link.href}>{link.name}</a>
+								</div>
+							))}
+						</div>
+						<div className="flex grow-1"></div>
+						<Button
+							className="mx-2 bg-teal-600 flex justify-center rounded-sm"
+							variant={'default'}
+							color={'teal-700'}
+						>
+							<Icon path={mdiLightningBolt} size={1} />
+							LAUNCH NOW
+						</Button>
+						<Button className="mx-2" variant={'outline'}>
+							2.51/30 GB Used
+						</Button>
+						<div>
+							<DropdownMenu>
+								<DropdownMenuTrigger>
+									<Icon path={mdiAccount} size={1} />
+								</DropdownMenuTrigger>
+
+								<DropdownMenuContent>
+									<DropdownMenuGroup>
+										<DropdownMenuItem>
+											<div className="flex">
+												<Icon
+													className="rounded-full mx-2"
+													path={mdiAccount}
+													size={2}
+												/>
+												<div className="flex flex-col text-gray-500 justify-center align-center">
+													<div>Harsh Jain</div>
+													<div>harshjain17may@gmail.com</div>
+												</div>
+											</div>
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
+									<DropdownMenuSeparator />
+									<DropdownMenuGroup>
+										<DropdownMenuItem>
+											<Icon path={mdiWalletBifoldOutline} size={1} />
+											Subscription Management{' '}
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Icon path={mdiCashMultiple} size={1} />
+											Invoices{' '}
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
+									<DropdownMenuSeparator />
+									<DropdownMenuGroup>
+										<DropdownMenuItem>
+											<Icon path={mdiLogout} size={1} />
+											<span className="text-pink-700">Log Out </span>
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+					</div>
+				</div>
+				<div className=" w-full border-b border-[#64ffda]"></div>
+
 				{children}
 			</body>
 		</html>
